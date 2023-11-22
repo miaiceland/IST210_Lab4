@@ -1,0 +1,52 @@
+CREATE TABLE patient (
+SNN INT NOT NULL PRIMARY KEY,
+name VARCHAR(30) NOT NULL,
+address VARCHAR(50) NOT NULL,
+phone VARCHAR(15) NOT NULL,
+insuranceID INT NOT NULL
+);
+
+CREATE TABLE procedures (
+code INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+cost INT NOT NULL
+);
+
+CREATE TABLE nurse (
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+position VARCHAR(30) NOT NULL,
+registered INT NOT NULL,
+SNN INT NOT NULL
+);
+
+CREATE TABLE room (
+number INT NOT NULL PRIMARY KEY,
+roomType VARCHAR(10) NOT NULL,
+floor INT NOT NULL,
+block VARCHAR(1) NOT NULL
+);
+
+CREATE TABLE hospital_record (
+record_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+patient_snn INT NOT NULL,
+CONSTRAINT fk_patient_snn FOREIGN KEY (patient_ssn) REFERENCES patient(SNN)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+procedure_code INT NOT NULL,
+CONSTRAINT fk_procedure_code FOREIGN KEY(procedure_code) REFERENCES procedures(code)
+ON DELETE CASCADE
+ON UPDATE CASCADE, 
+physician_id INT NOT NULL,
+CONSTRAINT fk_physician_id FOREIGN KEY (physician_id) REFERENCES physician(id)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+assistingNurse_id INT,
+room_num INT NOT NULL,
+CONSTRAINT fk_room_num FOREIGN KEY (room_num) REFERENCES room(number)
+ON DELETE CASCADE
+ON UPDATE CASCADE,
+date_undergoes DATE,
+stayStart DATE,
+stayEnd DATE
+);
